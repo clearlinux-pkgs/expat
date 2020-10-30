@@ -6,10 +6,10 @@
 #
 Name     : expat
 Version  : 2.2.9
-Release  : 42
+Release  : 43
 URL      : https://sourceforge.net/projects/expat/files/expat/2.2.9/expat-2.2.9.tar.xz
 Source0  : https://sourceforge.net/projects/expat/files/expat/2.2.9/expat-2.2.9.tar.xz
-Source1 : https://sourceforge.net/projects/expat/files/expat/2.2.9/expat-2.2.9.tar.xz.asc
+Source1  : https://sourceforge.net/projects/expat/files/expat/2.2.9/expat-2.2.9.tar.xz.asc
 Summary  : expat XML parser
 Group    : Development/Tools
 License  : MIT
@@ -46,7 +46,6 @@ Group: Development
 Requires: expat-lib = %{version}-%{release}
 Requires: expat-bin = %{version}-%{release}
 Provides: expat-devel = %{version}-%{release}
-Requires: expat = %{version}-%{release}
 Requires: expat = %{version}-%{release}
 
 %description dev
@@ -109,6 +108,7 @@ man components for the expat package.
 
 %prep
 %setup -q -n expat-2.2.9
+cd %{_builddir}/expat-2.2.9
 pushd ..
 cp -a expat-2.2.9 build32
 popd
@@ -121,16 +121,15 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1569454555
-# -Werror is for werrorists
+export SOURCE_DATE_EPOCH=1604080543
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
-export CFLAGS="$CFLAGS -O3 -falign-functions=32 -fcf-protection=full -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong "
-export FCFLAGS="$CFLAGS -O3 -falign-functions=32 -fcf-protection=full -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong "
-export FFLAGS="$CFLAGS -O3 -falign-functions=32 -fcf-protection=full -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong "
-export CXXFLAGS="$CXXFLAGS -O3 -falign-functions=32 -fcf-protection=full -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong "
+export CFLAGS="$CFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong -mzero-caller-saved-regs=used "
+export FCFLAGS="$FFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong -mzero-caller-saved-regs=used "
+export FFLAGS="$FFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong -mzero-caller-saved-regs=used "
+export CXXFLAGS="$CXXFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong -mzero-caller-saved-regs=used "
 %configure --disable-static DOCBOOK_TO_MAN="xmlto man --skip-validation"
 make  %{?_smp_mflags}
 
@@ -147,6 +146,8 @@ unset PKG_CONFIG_PATH
 pushd ../buildavx2/
 export CFLAGS="$CFLAGS -m64 -march=haswell"
 export CXXFLAGS="$CXXFLAGS -m64 -march=haswell"
+export FFLAGS="$FFLAGS -m64 -march=haswell"
+export FCFLAGS="$FCFLAGS -m64 -march=haswell"
 export LDFLAGS="$LDFLAGS -m64 -march=haswell"
 %configure --disable-static DOCBOOK_TO_MAN="xmlto man --skip-validation"
 make  %{?_smp_mflags}
@@ -156,17 +157,17 @@ export LANG=C.UTF-8
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
-make VERBOSE=1 V=1 %{?_smp_mflags} check
+make %{?_smp_mflags} check
 cd ../build32;
-make VERBOSE=1 V=1 %{?_smp_mflags} check || :
+make %{?_smp_mflags} check || :
 cd ../buildavx2;
-make VERBOSE=1 V=1 %{?_smp_mflags} check || :
+make %{?_smp_mflags} check || :
 
 %install
-export SOURCE_DATE_EPOCH=1569454555
+export SOURCE_DATE_EPOCH=1604080543
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/expat
-cp COPYING %{buildroot}/usr/share/package-licenses/expat/COPYING
+cp %{_builddir}/expat-2.2.9/COPYING %{buildroot}/usr/share/package-licenses/expat/1830cf88edd943aadba8ca7504d45113ca3431a2
 pushd ../build32/
 %make_install32
 if [ -d  %{buildroot}/usr/lib32/pkgconfig ]
@@ -222,7 +223,7 @@ popd
 
 %files license
 %defattr(0644,root,root,0755)
-/usr/share/package-licenses/expat/COPYING
+/usr/share/package-licenses/expat/1830cf88edd943aadba8ca7504d45113ca3431a2
 
 %files man
 %defattr(0644,root,root,0755)
