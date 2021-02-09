@@ -5,11 +5,11 @@
 # Source0 file verified with key 0x96262ACFFBD3AEC6 (sping@gentoo.org)
 #
 Name     : expat
-Version  : 2.2.9
-Release  : 43
-URL      : https://sourceforge.net/projects/expat/files/expat/2.2.9/expat-2.2.9.tar.xz
-Source0  : https://sourceforge.net/projects/expat/files/expat/2.2.9/expat-2.2.9.tar.xz
-Source1  : https://sourceforge.net/projects/expat/files/expat/2.2.9/expat-2.2.9.tar.xz.asc
+Version  : 2.2.10
+Release  : 44
+URL      : https://sourceforge.net/projects/expat/files/expat/2.2.10/expat-2.2.10.tar.xz
+Source0  : https://sourceforge.net/projects/expat/files/expat/2.2.10/expat-2.2.10.tar.xz
+Source1  : https://sourceforge.net/projects/expat/files/expat/2.2.10/expat-2.2.10.tar.xz.asc
 Summary  : expat XML parser
 Group    : Development/Tools
 License  : MIT
@@ -107,13 +107,13 @@ man components for the expat package.
 
 
 %prep
-%setup -q -n expat-2.2.9
-cd %{_builddir}/expat-2.2.9
+%setup -q -n expat-2.2.10
+cd %{_builddir}/expat-2.2.10
 pushd ..
-cp -a expat-2.2.9 build32
+cp -a expat-2.2.10 build32
 popd
 pushd ..
-cp -a expat-2.2.9 buildavx2
+cp -a expat-2.2.10 buildavx2
 popd
 
 %build
@@ -121,7 +121,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1604080543
+export SOURCE_DATE_EPOCH=1612854767
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -164,10 +164,10 @@ cd ../buildavx2;
 make %{?_smp_mflags} check || :
 
 %install
-export SOURCE_DATE_EPOCH=1604080543
+export SOURCE_DATE_EPOCH=1612854767
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/expat
-cp %{_builddir}/expat-2.2.9/COPYING %{buildroot}/usr/share/package-licenses/expat/1830cf88edd943aadba8ca7504d45113ca3431a2
+cp %{_builddir}/expat-2.2.10/COPYING %{buildroot}/usr/share/package-licenses/expat/8623dd26727a708a49dbe6a52edb1d931d70816d
 pushd ../build32/
 %make_install32
 if [ -d  %{buildroot}/usr/lib32/pkgconfig ]
@@ -212,18 +212,18 @@ popd
 %files lib
 %defattr(-,root,root,-)
 /usr/lib64/haswell/libexpat.so.1
-/usr/lib64/haswell/libexpat.so.1.6.11
+/usr/lib64/haswell/libexpat.so.1.6.12
 /usr/lib64/libexpat.so.1
-/usr/lib64/libexpat.so.1.6.11
+/usr/lib64/libexpat.so.1.6.12
 
 %files lib32
 %defattr(-,root,root,-)
 /usr/lib32/libexpat.so.1
-/usr/lib32/libexpat.so.1.6.11
+/usr/lib32/libexpat.so.1.6.12
 
 %files license
 %defattr(0644,root,root,0755)
-/usr/share/package-licenses/expat/1830cf88edd943aadba8ca7504d45113ca3431a2
+/usr/share/package-licenses/expat/8623dd26727a708a49dbe6a52edb1d931d70816d
 
 %files man
 %defattr(0644,root,root,0755)
