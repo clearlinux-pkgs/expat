@@ -5,11 +5,11 @@
 # Source0 file verified with key 0x96262ACFFBD3AEC6 (sping@gentoo.org)
 #
 Name     : expat
-Version  : 2.3.0
-Release  : 46
-URL      : https://sourceforge.net/projects/expat/files/expat/2.3.0/expat-2.3.0.tar.xz
-Source0  : https://sourceforge.net/projects/expat/files/expat/2.3.0/expat-2.3.0.tar.xz
-Source1  : https://sourceforge.net/projects/expat/files/expat/2.3.0/expat-2.3.0.tar.xz.asc
+Version  : 2.4.1
+Release  : 47
+URL      : https://sourceforge.net/projects/expat/files/expat/2.4.1/expat-2.4.1.tar.xz
+Source0  : https://sourceforge.net/projects/expat/files/expat/2.4.1/expat-2.4.1.tar.xz
+Source1  : https://sourceforge.net/projects/expat/files/expat/2.4.1/expat-2.4.1.tar.xz.asc
 Summary  : expat XML parser
 Group    : Development/Tools
 License  : MIT
@@ -30,6 +30,8 @@ Patch1: cve-2016-4472.nopatch
 [![Run Linux Travis CI tasks](https://github.com/libexpat/libexpat/actions/workflows/linux.yml/badge.svg)](https://github.com/libexpat/libexpat/actions/workflows/linux.yml)
 [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/libexpat/libexpat?svg=true)](https://ci.appveyor.com/project/libexpat/libexpat)
 [![Packaging status](https://repology.org/badge/tiny-repos/expat.svg)](https://repology.org/metapackage/expat/versions)
+[![Downloads SourceForge](https://img.shields.io/sourceforge/dt/expat?label=Downloads%20SourceForge)](https://sourceforge.net/projects/expat/files/)
+[![Downloads GitHub](https://img.shields.io/github/downloads/libexpat/libexpat/total?label=Downloads%20GitHub)](https://github.com/libexpat/libexpat/releases)
 
 %package bin
 Summary: bin components for the expat package.
@@ -107,13 +109,13 @@ man components for the expat package.
 
 
 %prep
-%setup -q -n expat-2.3.0
-cd %{_builddir}/expat-2.3.0
+%setup -q -n expat-2.4.1
+cd %{_builddir}/expat-2.4.1
 pushd ..
-cp -a expat-2.3.0 build32
+cp -a expat-2.4.1 build32
 popd
 pushd ..
-cp -a expat-2.3.0 buildavx2
+cp -a expat-2.4.1 buildavx2
 popd
 
 %build
@@ -121,7 +123,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1617127196
+export SOURCE_DATE_EPOCH=1621868515
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -164,10 +166,10 @@ cd ../buildavx2;
 make %{?_smp_mflags} check || :
 
 %install
-export SOURCE_DATE_EPOCH=1617127196
+export SOURCE_DATE_EPOCH=1621868515
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/expat
-cp %{_builddir}/expat-2.3.0/COPYING %{buildroot}/usr/share/package-licenses/expat/8623dd26727a708a49dbe6a52edb1d931d70816d
+cp %{_builddir}/expat-2.4.1/COPYING %{buildroot}/usr/share/package-licenses/expat/8623dd26727a708a49dbe6a52edb1d931d70816d
 pushd ../build32/
 %make_install32
 if [ -d  %{buildroot}/usr/lib32/pkgconfig ]
@@ -195,20 +197,20 @@ popd
 /usr/include/expat.h
 /usr/include/expat_config.h
 /usr/include/expat_external.h
-/usr/lib64/cmake/expat-2.3.0/expat-config-version.cmake
-/usr/lib64/cmake/expat-2.3.0/expat-config.cmake
-/usr/lib64/cmake/expat-2.3.0/expat-noconfig.cmake
-/usr/lib64/cmake/expat-2.3.0/expat.cmake
+/usr/lib64/cmake/expat-2.4.1/expat-config-version.cmake
+/usr/lib64/cmake/expat-2.4.1/expat-config.cmake
+/usr/lib64/cmake/expat-2.4.1/expat-noconfig.cmake
+/usr/lib64/cmake/expat-2.4.1/expat.cmake
 /usr/lib64/haswell/libexpat.so
 /usr/lib64/libexpat.so
 /usr/lib64/pkgconfig/expat.pc
 
 %files dev32
 %defattr(-,root,root,-)
-/usr/lib32/cmake/expat-2.3.0/expat-config-version.cmake
-/usr/lib32/cmake/expat-2.3.0/expat-config.cmake
-/usr/lib32/cmake/expat-2.3.0/expat-noconfig.cmake
-/usr/lib32/cmake/expat-2.3.0/expat.cmake
+/usr/lib32/cmake/expat-2.4.1/expat-config-version.cmake
+/usr/lib32/cmake/expat-2.4.1/expat-config.cmake
+/usr/lib32/cmake/expat-2.4.1/expat-noconfig.cmake
+/usr/lib32/cmake/expat-2.4.1/expat.cmake
 /usr/lib32/libexpat.so
 /usr/lib32/pkgconfig/32expat.pc
 /usr/lib32/pkgconfig/expat.pc
@@ -220,14 +222,14 @@ popd
 %files lib
 %defattr(-,root,root,-)
 /usr/lib64/haswell/libexpat.so.1
-/usr/lib64/haswell/libexpat.so.1.7.0
+/usr/lib64/haswell/libexpat.so.1.8.1
 /usr/lib64/libexpat.so.1
-/usr/lib64/libexpat.so.1.7.0
+/usr/lib64/libexpat.so.1.8.1
 
 %files lib32
 %defattr(-,root,root,-)
 /usr/lib32/libexpat.so.1
-/usr/lib32/libexpat.so.1.7.0
+/usr/lib32/libexpat.so.1.8.1
 
 %files license
 %defattr(0644,root,root,0755)
