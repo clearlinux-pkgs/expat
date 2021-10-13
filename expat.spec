@@ -6,7 +6,7 @@
 #
 Name     : expat
 Version  : 2.4.1
-Release  : 48
+Release  : 49
 URL      : https://sourceforge.net/projects/expat/files/expat/2.4.1/expat-2.4.1.tar.xz
 Source0  : https://sourceforge.net/projects/expat/files/expat/2.4.1/expat-2.4.1.tar.xz
 Source1  : https://sourceforge.net/projects/expat/files/expat/2.4.1/expat-2.4.1.tar.xz.asc
@@ -14,6 +14,7 @@ Summary  : expat XML parser
 Group    : Development/Tools
 License  : MIT
 Requires: expat-bin = %{version}-%{release}
+Requires: expat-filemap = %{version}-%{release}
 Requires: expat-lib = %{version}-%{release}
 Requires: expat-license = %{version}-%{release}
 Requires: expat-man = %{version}-%{release}
@@ -37,6 +38,7 @@ Patch1: cve-2016-4472.nopatch
 Summary: bin components for the expat package.
 Group: Binaries
 Requires: expat-license = %{version}-%{release}
+Requires: expat-filemap = %{version}-%{release}
 
 %description bin
 bin components for the expat package.
@@ -74,10 +76,19 @@ Requires: expat-man = %{version}-%{release}
 doc components for the expat package.
 
 
+%package filemap
+Summary: filemap components for the expat package.
+Group: Default
+
+%description filemap
+filemap components for the expat package.
+
+
 %package lib
 Summary: lib components for the expat package.
 Group: Libraries
 Requires: expat-license = %{version}-%{release}
+Requires: expat-filemap = %{version}-%{release}
 
 %description lib
 lib components for the expat package.
@@ -123,20 +134,20 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1621868515
+export SOURCE_DATE_EPOCH=1634131805
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
-export CFLAGS="$CFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong -fzero-call-used-regs=used "
-export FCFLAGS="$FFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong -fzero-call-used-regs=used "
-export FFLAGS="$FFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong -fzero-call-used-regs=used "
-export CXXFLAGS="$CXXFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong -fzero-call-used-regs=used "
+export CFLAGS="$CFLAGS -O3 -Ofast -falign-functions=32 -ffat-lto-objects -flto=auto -fno-semantic-interposition -fstack-protector-strong -fzero-call-used-regs=used -mno-vzeroupper -mprefer-vector-width=256 "
+export FCFLAGS="$FFLAGS -O3 -Ofast -falign-functions=32 -ffat-lto-objects -flto=auto -fno-semantic-interposition -fstack-protector-strong -fzero-call-used-regs=used -mno-vzeroupper -mprefer-vector-width=256 "
+export FFLAGS="$FFLAGS -O3 -Ofast -falign-functions=32 -ffat-lto-objects -flto=auto -fno-semantic-interposition -fstack-protector-strong -fzero-call-used-regs=used -mno-vzeroupper -mprefer-vector-width=256 "
+export CXXFLAGS="$CXXFLAGS -O3 -Ofast -falign-functions=32 -ffat-lto-objects -flto=auto -fno-semantic-interposition -fstack-protector-strong -fzero-call-used-regs=used -mno-vzeroupper -mprefer-vector-width=256 "
 %configure --disable-static DOCBOOK_TO_MAN="xmlto man --skip-validation"
 make  %{?_smp_mflags}
 
 pushd ../build32/
-export PKG_CONFIG_PATH="/usr/lib32/pkgconfig"
+export PKG_CONFIG_PATH="/usr/lib32/pkgconfig:/usr/share/pkgconfig"
 export ASFLAGS="${ASFLAGS}${ASFLAGS:+ }--32"
 export CFLAGS="${CFLAGS}${CFLAGS:+ }-m32 -mstackrealign"
 export CXXFLAGS="${CXXFLAGS}${CXXFLAGS:+ }-m32 -mstackrealign"
@@ -146,11 +157,11 @@ make  %{?_smp_mflags}
 popd
 unset PKG_CONFIG_PATH
 pushd ../buildavx2/
-export CFLAGS="$CFLAGS -m64 -march=haswell"
-export CXXFLAGS="$CXXFLAGS -m64 -march=haswell"
-export FFLAGS="$FFLAGS -m64 -march=haswell"
-export FCFLAGS="$FCFLAGS -m64 -march=haswell"
-export LDFLAGS="$LDFLAGS -m64 -march=haswell"
+export CFLAGS="$CFLAGS -m64 -march=x86-64-v3"
+export CXXFLAGS="$CXXFLAGS -m64 -march=x86-64-v3"
+export FFLAGS="$FFLAGS -m64 -march=x86-64-v3"
+export FCFLAGS="$FCFLAGS -m64 -march=x86-64-v3"
+export LDFLAGS="$LDFLAGS -m64 -march=x86-64-v3"
 %configure --disable-static DOCBOOK_TO_MAN="xmlto man --skip-validation"
 make  %{?_smp_mflags}
 popd
@@ -159,14 +170,14 @@ export LANG=C.UTF-8
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
-make %{?_smp_mflags} check
+make %{?_smp_mflags} check || :
 cd ../build32;
-make %{?_smp_mflags} check || :
+make %{?_smp_mflags} check || : || :
 cd ../buildavx2;
-make %{?_smp_mflags} check || :
+make %{?_smp_mflags} check || : || :
 
 %install
-export SOURCE_DATE_EPOCH=1621868515
+export SOURCE_DATE_EPOCH=1634131805
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/expat
 cp %{_builddir}/expat-2.4.1/COPYING %{buildroot}/usr/share/package-licenses/expat/8623dd26727a708a49dbe6a52edb1d931d70816d
@@ -178,19 +189,26 @@ pushd %{buildroot}/usr/lib32/pkgconfig
 for i in *.pc ; do ln -s $i 32$i ; done
 popd
 fi
+if [ -d %{buildroot}/usr/share/pkgconfig ]
+then
+pushd %{buildroot}/usr/share/pkgconfig
+for i in *.pc ; do ln -s $i 32$i ; done
+popd
+fi
 popd
 pushd ../buildavx2/
-%make_install_avx2
+%make_install_v3
 popd
 %make_install
+/usr/bin/elf-move.py avx2 %{buildroot}-v3 %{buildroot}/usr/share/clear/optimized-elf/ %{buildroot}/usr/share/clear/filemap/filemap-%{name}
 
 %files
 %defattr(-,root,root,-)
 
 %files bin
 %defattr(-,root,root,-)
-/usr/bin/haswell/xmlwf
 /usr/bin/xmlwf
+/usr/share/clear/optimized-elf/bin*
 
 %files dev
 %defattr(-,root,root,-)
@@ -201,7 +219,6 @@ popd
 /usr/lib64/cmake/expat-2.4.1/expat-config.cmake
 /usr/lib64/cmake/expat-2.4.1/expat-noconfig.cmake
 /usr/lib64/cmake/expat-2.4.1/expat.cmake
-/usr/lib64/haswell/libexpat.so
 /usr/lib64/libexpat.so
 /usr/lib64/pkgconfig/expat.pc
 
@@ -219,12 +236,15 @@ popd
 %defattr(0644,root,root,0755)
 %doc /usr/share/doc/expat/*
 
+%files filemap
+%defattr(-,root,root,-)
+/usr/share/clear/filemap/filemap-expat
+
 %files lib
 %defattr(-,root,root,-)
-/usr/lib64/haswell/libexpat.so.1
-/usr/lib64/haswell/libexpat.so.1.8.1
 /usr/lib64/libexpat.so.1
 /usr/lib64/libexpat.so.1.8.1
+/usr/share/clear/optimized-elf/lib*
 
 %files lib32
 %defattr(-,root,root,-)
