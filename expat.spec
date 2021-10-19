@@ -6,7 +6,7 @@
 #
 Name     : expat
 Version  : 2.4.1
-Release  : 49
+Release  : 50
 URL      : https://sourceforge.net/projects/expat/files/expat/2.4.1/expat-2.4.1.tar.xz
 Source0  : https://sourceforge.net/projects/expat/files/expat/2.4.1/expat-2.4.1.tar.xz
 Source1  : https://sourceforge.net/projects/expat/files/expat/2.4.1/expat-2.4.1.tar.xz.asc
@@ -134,7 +134,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1634131805
+export SOURCE_DATE_EPOCH=1634681260
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -157,9 +157,9 @@ make  %{?_smp_mflags}
 popd
 unset PKG_CONFIG_PATH
 pushd ../buildavx2/
-export CFLAGS="$CFLAGS -m64 -march=x86-64-v3"
-export CXXFLAGS="$CXXFLAGS -m64 -march=x86-64-v3"
-export FFLAGS="$FFLAGS -m64 -march=x86-64-v3"
+export CFLAGS="$CFLAGS -m64 -march=x86-64-v3 -Wl,-z,x86-64-v3"
+export CXXFLAGS="$CXXFLAGS -m64 -march=x86-64-v3 -Wl,-z,x86-64-v3"
+export FFLAGS="$FFLAGS -m64 -march=x86-64-v3 -Wl,-z,x86-64-v3"
 export FCFLAGS="$FCFLAGS -m64 -march=x86-64-v3"
 export LDFLAGS="$LDFLAGS -m64 -march=x86-64-v3"
 %configure --disable-static DOCBOOK_TO_MAN="xmlto man --skip-validation"
@@ -177,7 +177,7 @@ cd ../buildavx2;
 make %{?_smp_mflags} check || : || :
 
 %install
-export SOURCE_DATE_EPOCH=1634131805
+export SOURCE_DATE_EPOCH=1634681260
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/expat
 cp %{_builddir}/expat-2.4.1/COPYING %{buildroot}/usr/share/package-licenses/expat/8623dd26727a708a49dbe6a52edb1d931d70816d
