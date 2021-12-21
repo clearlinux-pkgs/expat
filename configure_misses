@@ -1,6 +1,12 @@
 Configure miss: arc4random (BSD, macOS or libbsd)
 Configure miss: arc4random (BSD, macOS or libbsd)
 Configure miss: arc4random (BSD, macOS or libbsd)
+Configure miss: arc4random (BSD, macOS or libbsd)
 Configure miss: arc4random_buf (BSD or libbsd)
 Configure miss: arc4random_buf (BSD or libbsd)
 Configure miss: arc4random_buf (BSD or libbsd)
+Configure miss: arc4random_buf (BSD or libbsd)
+Configure miss: g++ option to enable C++11 features
+Configure miss: g++ option to enable C++11 features
+Configure miss: g++ option to enable C++11 features
+Configure miss: g++ option to enable C++11 features

@@ -5,11 +5,11 @@
 # Source0 file verified with key 0x96262ACFFBD3AEC6 (sping@gentoo.org)
 #
 Name     : expat
-Version  : 2.4.1
-Release  : 50
-URL      : https://sourceforge.net/projects/expat/files/expat/2.4.1/expat-2.4.1.tar.xz
-Source0  : https://sourceforge.net/projects/expat/files/expat/2.4.1/expat-2.4.1.tar.xz
-Source1  : https://sourceforge.net/projects/expat/files/expat/2.4.1/expat-2.4.1.tar.xz.asc
+Version  : 2.4.2
+Release  : 51
+URL      : https://sourceforge.net/projects/expat/files/expat/2.4.2/expat-2.4.2.tar.xz
+Source0  : https://sourceforge.net/projects/expat/files/expat/2.4.2/expat-2.4.2.tar.xz
+Source1  : https://sourceforge.net/projects/expat/files/expat/2.4.2/expat-2.4.2.tar.xz.asc
 Summary  : expat XML parser
 Group    : Development/Tools
 License  : MIT
@@ -120,13 +120,16 @@ man components for the expat package.
 
 
 %prep
-%setup -q -n expat-2.4.1
-cd %{_builddir}/expat-2.4.1
+%setup -q -n expat-2.4.2
+cd %{_builddir}/expat-2.4.2
 pushd ..
-cp -a expat-2.4.1 build32
+cp -a expat-2.4.2 build32
 popd
 pushd ..
-cp -a expat-2.4.1 buildavx2
+cp -a expat-2.4.2 buildavx2
+popd
+pushd ..
+cp -a expat-2.4.2 buildavx512
 popd
 
 %build
@@ -134,7 +137,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1634681260
+export SOURCE_DATE_EPOCH=1640123947
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -165,6 +168,16 @@ export LDFLAGS="$LDFLAGS -m64 -march=x86-64-v3"
 %configure --disable-static DOCBOOK_TO_MAN="xmlto man --skip-validation"
 make  %{?_smp_mflags}
 popd
+unset PKG_CONFIG_PATH
+pushd ../buildavx512/
+export CFLAGS="$CFLAGS -m64 -march=x86-64-v4 -mprefer-vector-width=256 -Wl,-z,x86-64-v4"
+export CXXFLAGS="$CXXFLAGS -m64 -march=x86-64-v4 -mprefer-vector-width=256 -Wl,-z,x86-64-v4"
+export FFLAGS="$FFLAGS -m64 -march=x86-64-v4 -mprefer-vector-width=256"
+export FCFLAGS="$FCFLAGS -m64 -march=x86-64-v4 -mprefer-vector-width=256"
+export LDFLAGS="$LDFLAGS -m64 -march=x86-64-v4"
+%configure --disable-static DOCBOOK_TO_MAN="xmlto man --skip-validation"
+make  %{?_smp_mflags}
+popd
 %check
 export LANG=C.UTF-8
 export http_proxy=http://127.0.0.1:9/
@@ -175,12 +188,14 @@ cd ../build32;
 make %{?_smp_mflags} check || : || :
 cd ../buildavx2;
 make %{?_smp_mflags} check || : || :
+cd ../buildavx512;
+make %{?_smp_mflags} check || : || :
 
 %install
-export SOURCE_DATE_EPOCH=1634681260
+export SOURCE_DATE_EPOCH=1640123947
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/expat
-cp %{_builddir}/expat-2.4.1/COPYING %{buildroot}/usr/share/package-licenses/expat/8623dd26727a708a49dbe6a52edb1d931d70816d
+cp %{_builddir}/expat-2.4.2/COPYING %{buildroot}/usr/share/package-licenses/expat/8623dd26727a708a49dbe6a52edb1d931d70816d
 pushd ../build32/
 %make_install32
 if [ -d  %{buildroot}/usr/lib32/pkgconfig ]
@@ -199,8 +214,12 @@ popd
 pushd ../buildavx2/
 %make_install_v3
 popd
+pushd ../buildavx512/
+%make_install_v4
+popd
 %make_install
 /usr/bin/elf-move.py avx2 %{buildroot}-v3 %{buildroot}/usr/share/clear/optimized-elf/ %{buildroot}/usr/share/clear/filemap/filemap-%{name}
+/usr/bin/elf-move.py avx512 %{buildroot}-v4 %{buildroot}/usr/share/clear/optimized-elf/ %{buildroot}/usr/share/clear/filemap/filemap-%{name}
 
 %files
 %defattr(-,root,root,-)
@@ -215,19 +234,19 @@ popd
 /usr/include/expat.h
 /usr/include/expat_config.h
 /usr/include/expat_external.h
-/usr/lib64/cmake/expat-2.4.1/expat-config-version.cmake
-/usr/lib64/cmake/expat-2.4.1/expat-config.cmake
-/usr/lib64/cmake/expat-2.4.1/expat-noconfig.cmake
-/usr/lib64/cmake/expat-2.4.1/expat.cmake
+/usr/lib64/cmake/expat-2.4.2/expat-config-version.cmake
+/usr/lib64/cmake/expat-2.4.2/expat-config.cmake
+/usr/lib64/cmake/expat-2.4.2/expat-noconfig.cmake
+/usr/lib64/cmake/expat-2.4.2/expat.cmake
 /usr/lib64/libexpat.so
 /usr/lib64/pkgconfig/expat.pc
 
 %files dev32
 %defattr(-,root,root,-)
-/usr/lib32/cmake/expat-2.4.1/expat-config-version.cmake
-/usr/lib32/cmake/expat-2.4.1/expat-config.cmake
-/usr/lib32/cmake/expat-2.4.1/expat-noconfig.cmake
-/usr/lib32/cmake/expat-2.4.1/expat.cmake
+/usr/lib32/cmake/expat-2.4.2/expat-config-version.cmake
+/usr/lib32/cmake/expat-2.4.2/expat-config.cmake
+/usr/lib32/cmake/expat-2.4.2/expat-noconfig.cmake
+/usr/lib32/cmake/expat-2.4.2/expat.cmake
 /usr/lib32/libexpat.so
 /usr/lib32/pkgconfig/32expat.pc
 /usr/lib32/pkgconfig/expat.pc
@@ -243,13 +262,13 @@ popd
 %files lib
 %defattr(-,root,root,-)
 /usr/lib64/libexpat.so.1
-/usr/lib64/libexpat.so.1.8.1
+/usr/lib64/libexpat.so.1.8.2
 /usr/share/clear/optimized-elf/lib*
 
 %files lib32
 %defattr(-,root,root,-)
 /usr/lib32/libexpat.so.1
-/usr/lib32/libexpat.so.1.8.1
+/usr/lib32/libexpat.so.1.8.2
 
 %files license
 %defattr(0644,root,root,0755)
