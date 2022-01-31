@@ -5,11 +5,11 @@
 # Source0 file verified with key 0x96262ACFFBD3AEC6 (sping@gentoo.org)
 #
 Name     : expat
-Version  : 2.4.3
-Release  : 54
-URL      : https://sourceforge.net/projects/expat/files/expat/2.4.3/expat-2.4.3.tar.xz
-Source0  : https://sourceforge.net/projects/expat/files/expat/2.4.3/expat-2.4.3.tar.xz
-Source1  : https://sourceforge.net/projects/expat/files/expat/2.4.3/expat-2.4.3.tar.xz.asc
+Version  : 2.4.4
+Release  : 55
+URL      : https://sourceforge.net/projects/expat/files/expat/2.4.4/expat-2.4.4.tar.xz
+Source0  : https://sourceforge.net/projects/expat/files/expat/2.4.4/expat-2.4.4.tar.xz
+Source1  : https://sourceforge.net/projects/expat/files/expat/2.4.4/expat-2.4.4.tar.xz.asc
 Summary  : expat XML parser
 Group    : Development/Tools
 License  : MIT
@@ -120,16 +120,16 @@ man components for the expat package.
 
 
 %prep
-%setup -q -n expat-2.4.3
-cd %{_builddir}/expat-2.4.3
+%setup -q -n expat-2.4.4
+cd %{_builddir}/expat-2.4.4
 pushd ..
-cp -a expat-2.4.3 build32
+cp -a expat-2.4.4 build32
 popd
 pushd ..
-cp -a expat-2.4.3 buildavx2
+cp -a expat-2.4.4 buildavx2
 popd
 pushd ..
-cp -a expat-2.4.3 buildavx512
+cp -a expat-2.4.4 buildavx512
 popd
 
 %build
@@ -137,7 +137,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1642357468
+export SOURCE_DATE_EPOCH=1643653239
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -192,10 +192,10 @@ cd ../buildavx512;
 make %{?_smp_mflags} check || : || :
 
 %install
-export SOURCE_DATE_EPOCH=1642357468
+export SOURCE_DATE_EPOCH=1643653239
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/expat
-cp %{_builddir}/expat-2.4.3/COPYING %{buildroot}/usr/share/package-licenses/expat/8623dd26727a708a49dbe6a52edb1d931d70816d
+cp %{_builddir}/expat-2.4.4/COPYING %{buildroot}/usr/share/package-licenses/expat/8623dd26727a708a49dbe6a52edb1d931d70816d
 pushd ../build32/
 %make_install32
 if [ -d  %{buildroot}/usr/lib32/pkgconfig ]
@@ -234,19 +234,19 @@ popd
 /usr/include/expat.h
 /usr/include/expat_config.h
 /usr/include/expat_external.h
-/usr/lib64/cmake/expat-2.4.3/expat-config-version.cmake
-/usr/lib64/cmake/expat-2.4.3/expat-config.cmake
-/usr/lib64/cmake/expat-2.4.3/expat-noconfig.cmake
-/usr/lib64/cmake/expat-2.4.3/expat.cmake
+/usr/lib64/cmake/expat-2.4.4/expat-config-version.cmake
+/usr/lib64/cmake/expat-2.4.4/expat-config.cmake
+/usr/lib64/cmake/expat-2.4.4/expat-noconfig.cmake
+/usr/lib64/cmake/expat-2.4.4/expat.cmake
 /usr/lib64/libexpat.so
 /usr/lib64/pkgconfig/expat.pc
 
 %files dev32
 %defattr(-,root,root,-)
-/usr/lib32/cmake/expat-2.4.3/expat-config-version.cmake
-/usr/lib32/cmake/expat-2.4.3/expat-config.cmake
-/usr/lib32/cmake/expat-2.4.3/expat-noconfig.cmake
-/usr/lib32/cmake/expat-2.4.3/expat.cmake
+/usr/lib32/cmake/expat-2.4.4/expat-config-version.cmake
+/usr/lib32/cmake/expat-2.4.4/expat-config.cmake
+/usr/lib32/cmake/expat-2.4.4/expat-noconfig.cmake
+/usr/lib32/cmake/expat-2.4.4/expat.cmake
 /usr/lib32/libexpat.so
 /usr/lib32/pkgconfig/32expat.pc
 /usr/lib32/pkgconfig/expat.pc
@@ -262,13 +262,13 @@ popd
 %files lib
 %defattr(-,root,root,-)
 /usr/lib64/libexpat.so.1
-/usr/lib64/libexpat.so.1.8.3
+/usr/lib64/libexpat.so.1.8.4
 /usr/share/clear/optimized-elf/lib*
 
 %files lib32
 %defattr(-,root,root,-)
 /usr/lib32/libexpat.so.1
-/usr/lib32/libexpat.so.1.8.3
+/usr/lib32/libexpat.so.1.8.4
 
 %files license
 %defattr(0644,root,root,0755)
