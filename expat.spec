@@ -6,7 +6,7 @@
 #
 Name     : expat
 Version  : 2.4.8
-Release  : 59
+Release  : 60
 URL      : https://sourceforge.net/projects/expat/files/expat/2.4.8/expat-2.4.8.tar.xz
 Source0  : https://sourceforge.net/projects/expat/files/expat/2.4.8/expat-2.4.8.tar.xz
 Source1  : https://sourceforge.net/projects/expat/files/expat/2.4.8/expat-2.4.8.tar.xz.asc
@@ -137,15 +137,15 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1648511661
+export SOURCE_DATE_EPOCH=1656022786
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
-export CFLAGS="$CFLAGS -O3 -Ofast -falign-functions=32 -ffat-lto-objects -flto=auto -fno-semantic-interposition -fstack-protector-strong -fzero-call-used-regs=used -mno-vzeroupper -mprefer-vector-width=256 "
-export FCFLAGS="$FFLAGS -O3 -Ofast -falign-functions=32 -ffat-lto-objects -flto=auto -fno-semantic-interposition -fstack-protector-strong -fzero-call-used-regs=used -mno-vzeroupper -mprefer-vector-width=256 "
-export FFLAGS="$FFLAGS -O3 -Ofast -falign-functions=32 -ffat-lto-objects -flto=auto -fno-semantic-interposition -fstack-protector-strong -fzero-call-used-regs=used -mno-vzeroupper -mprefer-vector-width=256 "
-export CXXFLAGS="$CXXFLAGS -O3 -Ofast -falign-functions=32 -ffat-lto-objects -flto=auto -fno-semantic-interposition -fstack-protector-strong -fzero-call-used-regs=used -mno-vzeroupper -mprefer-vector-width=256 "
+export CFLAGS="$CFLAGS -O3 -Ofast -falign-functions=32 -ffat-lto-objects -flto=auto -fno-semantic-interposition -fstack-protector-strong -fzero-call-used-regs=used -mprefer-vector-width=256 "
+export FCFLAGS="$FFLAGS -O3 -Ofast -falign-functions=32 -ffat-lto-objects -flto=auto -fno-semantic-interposition -fstack-protector-strong -fzero-call-used-regs=used -mprefer-vector-width=256 "
+export FFLAGS="$FFLAGS -O3 -Ofast -falign-functions=32 -ffat-lto-objects -flto=auto -fno-semantic-interposition -fstack-protector-strong -fzero-call-used-regs=used -mprefer-vector-width=256 "
+export CXXFLAGS="$CXXFLAGS -O3 -Ofast -falign-functions=32 -ffat-lto-objects -flto=auto -fno-semantic-interposition -fstack-protector-strong -fzero-call-used-regs=used -mprefer-vector-width=256 "
 %configure --disable-static DOCBOOK_TO_MAN="xmlto man --skip-validation"
 make  %{?_smp_mflags}
 
@@ -192,7 +192,7 @@ cd ../buildavx512;
 make %{?_smp_mflags} check || : || :
 
 %install
-export SOURCE_DATE_EPOCH=1648511661
+export SOURCE_DATE_EPOCH=1656022786
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/expat
 cp %{_builddir}/expat-2.4.8/COPYING %{buildroot}/usr/share/package-licenses/expat/8623dd26727a708a49dbe6a52edb1d931d70816d
@@ -218,8 +218,8 @@ pushd ../buildavx512/
 %make_install_v4
 popd
 %make_install
-/usr/bin/elf-move.py avx2 %{buildroot}-v3 %{buildroot}/usr/share/clear/optimized-elf/ %{buildroot}/usr/share/clear/filemap/filemap-%{name}
-/usr/bin/elf-move.py avx512 %{buildroot}-v4 %{buildroot}/usr/share/clear/optimized-elf/ %{buildroot}/usr/share/clear/filemap/filemap-%{name}
+/usr/bin/elf-move.py avx2 %{buildroot}-v3 %{buildroot} %{buildroot}/usr/share/clear/filemap/filemap-%{name}
+/usr/bin/elf-move.py avx512 %{buildroot}-v4 %{buildroot} %{buildroot}/usr/share/clear/filemap/filemap-%{name}
 
 %files
 %defattr(-,root,root,-)
@@ -261,9 +261,14 @@ popd
 
 %files lib
 %defattr(-,root,root,-)
+/usr/lib64/glibc-hwcaps/x86-64-v3/libexpat.so
+/usr/lib64/glibc-hwcaps/x86-64-v3/libexpat.so.1
+/usr/lib64/glibc-hwcaps/x86-64-v3/libexpat.so.1.8.8
+/usr/lib64/glibc-hwcaps/x86-64-v4/libexpat.so
+/usr/lib64/glibc-hwcaps/x86-64-v4/libexpat.so.1
+/usr/lib64/glibc-hwcaps/x86-64-v4/libexpat.so.1.8.8
 /usr/lib64/libexpat.so.1
 /usr/lib64/libexpat.so.1.8.8
-/usr/share/clear/optimized-elf/lib*
 
 %files lib32
 %defattr(-,root,root,-)
