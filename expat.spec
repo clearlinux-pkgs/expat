@@ -6,7 +6,7 @@
 #
 Name     : expat
 Version  : 2.4.8
-Release  : 60
+Release  : 61
 URL      : https://sourceforge.net/projects/expat/files/expat/2.4.8/expat-2.4.8.tar.xz
 Source0  : https://sourceforge.net/projects/expat/files/expat/2.4.8/expat-2.4.8.tar.xz
 Source1  : https://sourceforge.net/projects/expat/files/expat/2.4.8/expat-2.4.8.tar.xz.asc
@@ -137,7 +137,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1656022786
+export SOURCE_DATE_EPOCH=1656105032
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -192,7 +192,7 @@ cd ../buildavx512;
 make %{?_smp_mflags} check || : || :
 
 %install
-export SOURCE_DATE_EPOCH=1656022786
+export SOURCE_DATE_EPOCH=1656105032
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/expat
 cp %{_builddir}/expat-2.4.8/COPYING %{buildroot}/usr/share/package-licenses/expat/8623dd26727a708a49dbe6a52edb1d931d70816d
