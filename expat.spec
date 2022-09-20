@@ -5,18 +5,17 @@
 # Source0 file verified with key 0x96262ACFFBD3AEC6 (sping@gentoo.org)
 #
 Name     : expat
-Version  : 2.4.8
-Release  : 64
-URL      : https://sourceforge.net/projects/expat/files/expat/2.4.8/expat-2.4.8.tar.xz
-Source0  : https://sourceforge.net/projects/expat/files/expat/2.4.8/expat-2.4.8.tar.xz
-Source1  : https://sourceforge.net/projects/expat/files/expat/2.4.8/expat-2.4.8.tar.xz.asc
+Version  : 2.4.9
+Release  : 65
+URL      : https://sourceforge.net/projects/expat/files/expat/2.4.9/expat-2.4.9.tar.xz
+Source0  : https://sourceforge.net/projects/expat/files/expat/2.4.9/expat-2.4.9.tar.xz
+Source1  : https://sourceforge.net/projects/expat/files/expat/2.4.9/expat-2.4.9.tar.xz.asc
 Summary  : expat XML parser
 Group    : Development/Tools
 License  : MIT
 Requires: expat-bin = %{version}-%{release}
 Requires: expat-filemap = %{version}-%{release}
 Requires: expat-lib = %{version}-%{release}
-Requires: expat-license = %{version}-%{release}
 Requires: expat-man = %{version}-%{release}
 BuildRequires : buildreq-configure
 BuildRequires : gcc-dev32
@@ -37,7 +36,6 @@ Patch1: cve-2016-4472.nopatch
 %package bin
 Summary: bin components for the expat package.
 Group: Binaries
-Requires: expat-license = %{version}-%{release}
 Requires: expat-filemap = %{version}-%{release}
 
 %description bin
@@ -87,7 +85,6 @@ filemap components for the expat package.
 %package lib
 Summary: lib components for the expat package.
 Group: Libraries
-Requires: expat-license = %{version}-%{release}
 Requires: expat-filemap = %{version}-%{release}
 
 %description lib
@@ -97,18 +94,9 @@ lib components for the expat package.
 %package lib32
 Summary: lib32 components for the expat package.
 Group: Default
-Requires: expat-license = %{version}-%{release}
 
 %description lib32
 lib32 components for the expat package.
-
-
-%package license
-Summary: license components for the expat package.
-Group: Default
-
-%description license
-license components for the expat package.
 
 
 %package man
@@ -120,16 +108,16 @@ man components for the expat package.
 
 
 %prep
-%setup -q -n expat-2.4.8
-cd %{_builddir}/expat-2.4.8
+%setup -q -n expat-2.4.9
+cd %{_builddir}/expat-2.4.9
 pushd ..
-cp -a expat-2.4.8 build32
+cp -a expat-2.4.9 build32
 popd
 pushd ..
-cp -a expat-2.4.8 buildavx2
+cp -a expat-2.4.9 buildavx2
 popd
 pushd ..
-cp -a expat-2.4.8 buildavx512
+cp -a expat-2.4.9 buildavx512
 popd
 
 %build
@@ -137,7 +125,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1656105032
+export SOURCE_DATE_EPOCH=1663698667
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -192,10 +180,8 @@ cd ../buildavx512;
 make %{?_smp_mflags} check || : || :
 
 %install
-export SOURCE_DATE_EPOCH=1656105032
+export SOURCE_DATE_EPOCH=1663698667
 rm -rf %{buildroot}
-mkdir -p %{buildroot}/usr/share/package-licenses/expat
-cp %{_builddir}/expat-2.4.8/COPYING %{buildroot}/usr/share/package-licenses/expat/8623dd26727a708a49dbe6a52edb1d931d70816d
 pushd ../build32/
 %make_install32
 if [ -d  %{buildroot}/usr/lib32/pkgconfig ]
@@ -234,19 +220,21 @@ popd
 /usr/include/expat.h
 /usr/include/expat_config.h
 /usr/include/expat_external.h
-/usr/lib64/cmake/expat-2.4.8/expat-config-version.cmake
-/usr/lib64/cmake/expat-2.4.8/expat-config.cmake
-/usr/lib64/cmake/expat-2.4.8/expat-noconfig.cmake
-/usr/lib64/cmake/expat-2.4.8/expat.cmake
+/usr/lib64/cmake/expat-2.4.9/expat-config-version.cmake
+/usr/lib64/cmake/expat-2.4.9/expat-config.cmake
+/usr/lib64/cmake/expat-2.4.9/expat-noconfig.cmake
+/usr/lib64/cmake/expat-2.4.9/expat.cmake
+/usr/lib64/glibc-hwcaps/x86-64-v3/libexpat.so
+/usr/lib64/glibc-hwcaps/x86-64-v4/libexpat.so
 /usr/lib64/libexpat.so
 /usr/lib64/pkgconfig/expat.pc
 
 %files dev32
 %defattr(-,root,root,-)
-/usr/lib32/cmake/expat-2.4.8/expat-config-version.cmake
-/usr/lib32/cmake/expat-2.4.8/expat-config.cmake
-/usr/lib32/cmake/expat-2.4.8/expat-noconfig.cmake
-/usr/lib32/cmake/expat-2.4.8/expat.cmake
+/usr/lib32/cmake/expat-2.4.9/expat-config-version.cmake
+/usr/lib32/cmake/expat-2.4.9/expat-config.cmake
+/usr/lib32/cmake/expat-2.4.9/expat-noconfig.cmake
+/usr/lib32/cmake/expat-2.4.9/expat.cmake
 /usr/lib32/libexpat.so
 /usr/lib32/pkgconfig/32expat.pc
 /usr/lib32/pkgconfig/expat.pc
@@ -261,23 +249,17 @@ popd
 
 %files lib
 %defattr(-,root,root,-)
-/usr/lib64/glibc-hwcaps/x86-64-v3/libexpat.so
 /usr/lib64/glibc-hwcaps/x86-64-v3/libexpat.so.1
-/usr/lib64/glibc-hwcaps/x86-64-v3/libexpat.so.1.8.8
-/usr/lib64/glibc-hwcaps/x86-64-v4/libexpat.so
+/usr/lib64/glibc-hwcaps/x86-64-v3/libexpat.so.1.8.9
 /usr/lib64/glibc-hwcaps/x86-64-v4/libexpat.so.1
-/usr/lib64/glibc-hwcaps/x86-64-v4/libexpat.so.1.8.8
+/usr/lib64/glibc-hwcaps/x86-64-v4/libexpat.so.1.8.9
 /usr/lib64/libexpat.so.1
-/usr/lib64/libexpat.so.1.8.8
+/usr/lib64/libexpat.so.1.8.9
 
 %files lib32
 %defattr(-,root,root,-)
 /usr/lib32/libexpat.so.1
-/usr/lib32/libexpat.so.1.8.8
-
-%files license
-%defattr(0644,root,root,0755)
-/usr/share/package-licenses/expat/8623dd26727a708a49dbe6a52edb1d931d70816d
+/usr/lib32/libexpat.so.1.8.9
 
 %files man
 %defattr(0644,root,root,0755)
