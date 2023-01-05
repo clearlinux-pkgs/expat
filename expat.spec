@@ -6,7 +6,7 @@
 #
 Name     : expat
 Version  : 2.5.0
-Release  : 70
+Release  : 71
 URL      : https://sourceforge.net/projects/expat/files/expat/2.5.0/expat-2.5.0.tar.xz
 Source0  : https://sourceforge.net/projects/expat/files/expat/2.5.0/expat-2.5.0.tar.xz
 Source1  : https://sourceforge.net/projects/expat/files/expat/2.5.0/expat-2.5.0.tar.xz.asc
