@@ -7,7 +7,7 @@
 #
 Name     : expat
 Version  : 2.5.0
-Release  : 72
+Release  : 73
 URL      : https://sourceforge.net/projects/expat/files/expat/2.5.0/expat-2.5.0.tar.xz
 Source0  : https://sourceforge.net/projects/expat/files/expat/2.5.0/expat-2.5.0.tar.xz
 Source1  : https://sourceforge.net/projects/expat/files/expat/2.5.0/expat-2.5.0.tar.xz.asc
@@ -130,7 +130,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1683311237
+export SOURCE_DATE_EPOCH=1685501479
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -185,7 +185,7 @@ cd ../buildavx512;
 make %{?_smp_mflags} check || : || :
 
 %install
-export SOURCE_DATE_EPOCH=1683311237
+export SOURCE_DATE_EPOCH=1685501479
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/expat
 cp %{_builddir}/expat-%{version}/COPYING %{buildroot}/usr/share/package-licenses/expat/39e6f567a10e36b2e77727e98e60bbcb3eb3af0b || :
@@ -225,8 +225,6 @@ popd
 
 %files dev
 %defattr(-,root,root,-)
-/V3/usr/lib64/libexpat.so
-/V4/usr/lib64/libexpat.so
 /usr/include/expat.h
 /usr/include/expat_config.h
 /usr/include/expat_external.h
@@ -253,9 +251,7 @@ popd
 
 %files lib
 %defattr(-,root,root,-)
-/V3/usr/lib64/libexpat.so.1
 /V3/usr/lib64/libexpat.so.1.8.10
-/V4/usr/lib64/libexpat.so.1
 /V4/usr/lib64/libexpat.so.1.8.10
 /usr/lib64/libexpat.so.1
 /usr/lib64/libexpat.so.1.8.10
